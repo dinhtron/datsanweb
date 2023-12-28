@@ -1,31 +1,11 @@
-<!-- resources/views/feedback/form.blade.php -->
+@section('content')
+    <p>Tài khoản: {{ $user->taikhoan }}</p>
+    <p>Email: {{ $user->email }}</p>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gửi phản hồi</title>
-</head>
-<body>
-
-@if ($userInfo)
-    <form method="post" action="{{ url("/feedback/{$userInfo->id_user}") }}">
+    <form method="post" action="{{ route('feedback.submit', ['id_user' => $user->id]) }}">
         @csrf
-        <label for="taikhoan">Tài khoản:</label>
-        <span>{{ $userInfo->taikhoan }}</span><br>
-
-        <label for="email">Email:</label>
-        <span>{{ $userInfo->email }}</span><br>
-
-        <label for="thongtin_phanhou">Thông tin phản hồi:</label>
-        <textarea name="thongtin_phanhou" required></textarea><br>
-
+        <label for="thongtin_phanhoi">Thông tin phản hồi:</label>
+        <textarea name="thongtin_phanhoi" id="thongtin_phanhoi" rows="4" cols="50"></textarea><br>
         <input type="submit" value="Gửi phản hồi">
     </form>
-@else
-    <p>Không tìm thấy thông tin người dùng.</p>
-@endif
-
-</body>
-</html>
+@endsection

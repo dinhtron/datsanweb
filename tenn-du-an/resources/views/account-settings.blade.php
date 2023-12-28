@@ -1,5 +1,3 @@
-<!-- resources/views/select_field.blade.php -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,26 +13,28 @@
             padding: 0;
             background-color: #f4f4f4;
         }
+
         nav {
-                background: linear-gradient(to bottom, #FAFAD2, white);
-                padding: 10px;
-                text-align: center;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
+            background: linear-gradient(to bottom, #FAFAD2, white);
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
 
-            nav a {
-                color: #00AA00;
-                text-decoration: none;
-                margin: 0 10px;
-            }
-            nav img {
-                margin-left: 150px;
-                width: 50px;
-                height: 50px;
-            }
+        nav a {
+            color: #00AA00;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        nav img {
+            margin-left: 150px;
+            width: 50px;
+            height: 50px;
+        }
+
         .nav-container {
             
             display: flex;
@@ -134,67 +134,65 @@
             padding-top: 20px;
             text-align: center;
         }
-       /* Add some styling to the form container */
-/* Style the form container */
-#fieldForm {
-    width: 100%; /* Adjust the width as needed */
-    margin: 20px auto; /* Center the form on the page */
-    margin-left: 20px;
-    margin-right: 20px;
-}
+        .account-settings-container {
+            max-width: 400px;
+            margin: 0 auto;
+            }
 
-/* Style the label */
-label {
-    display: block; /* Make the label a block element to place it on a new line */
-    margin-bottom: 5px; /* Add some space below the label */
-}
+            h2 {
+                color: #333;
+            }
 
-/* Style the field options container */
-.field-options {
-    display: flex; 
-}
+            form {
+                margin-top: 20px;
+            }
 
-/* Style each field option */
-.field-option {
-    cursor: pointer; /* Add a pointer cursor on hover to indicate it's clickable */
-    padding: 70px; /* Add padding for better visual appeal */
-    margin-left: 20px; /* Add space between field options */
-    border: 1px solid #ddd; /* Add a subtle border for separation */
-    border-radius: 4px; /* Add some border-radius for rounded corners */
-    background-color: #FAFAD2;
-}
+            .form-group {
+                margin-bottom: 15px;
+            }
 
-.field-option:hover {
-    background-color: #f5f5f5; /* Light background color on hover */
-}
+            label {
+                display: block;
+                margin-bottom: 5px;
+                color: #555;
+            }
 
-/* Hide the default dropdown arrow */
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    text-indent: 1px;
-    text-overflow: '';
-}
+            input {
+                width: 100%;
+                padding: 8px;
+                box-sizing: border-box;
+                margin-bottom: 10px;
+            }
 
-/* Style the hidden input */
-#selectedField {
-    display: none; /* Hide the hidden input */
-}
-h2 {
-    text-align: center; /* Center the text horizontally */
-    margin-top: 0; /* Remove default margin from the top */
-}
+            button {
+                background-color: #4caf50;
+                color: white;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
 
+            button:hover {
+                background-color: #45a049;
+            }
 
     </style>
 </head>
 
 <body>
+<?php
+    if (isset($taikhoan)) {
+
+    }else{
+        $taikhoan=null;
+        $id=null;
+    }
+?>
 <!-- header.php -->
 <nav class="nav-container">
     <img src="https://makan.vn/wp-content/uploads/2022/11/logo-da-banh-vector-1.jpg" alt="Logo">
-    <a href="{{ url('/home') }}"><i class="fas fa-home"></i> Trang chủ</a>
+    <a href="{{ url('/home', $id_user) }}"><i class="fas fa-home"></i> Trang chủ</a>
     <a href="{{ isset($id_user) ? url('/select-field') : 'javascript:showError()' }}"><i class="fas fa-futbol"></i> Đặt Sân</a>
     <a href="#"><i class="fas fa-shopping-bag"></i> Sản phẩm</a>
     <a href="{{ isset($id_user) ? url('/feedback') : 'javascript:showError()' }}"><i class="fas fa-check"></i> Phản hồi</a>
@@ -227,36 +225,35 @@ h2 {
     ?>
 
 </nav>
-<form id="fieldForm" action="{{ url('/select-field') }}" method="post">
-    @csrf
-    <input type="hidden" name="id_user" value="{{ $id_user }}">
-    <h2>Chọn sân</h2>
-    <div class="field-options">
-        @foreach ($fields as $field)
-        <div class="field-option" data-id="{{ $field->id_sanbong }}">
-            <span style="white-space: nowrap;">{{ $field->ten_sanbong }}</span>
-        </div>
+@section('content')
+    <div class="account-settings-container">
+        <h2>Account Settings</h2>
 
-        @endforeach
+        <form method="post" action="{{ route('updateAccount', ['id' => $id_user]) }}">
+            @csrf
+
+            <div class="form-group">
+                <label for="new-username">Username:</label>
+                <input type="text" id="new-username" name="new-username" value="{{ old('new-username', $current_taikhoan) }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="new-email">Email:</label>
+                <input type="email" id="new-email" name="new-email" value="{{ old('new-email', $current_email) }}" required>
+            </div>
+            <div class="form-group">
+                <label for="so_dt">Số Điện Thoại:</label>
+                <input type="tel" id="so_dt" name="so_dt" value="{{ old('so_dt', $current_so_dt) }}" required>
+            </div>
+            <div class="form-group">
+                <label for="new-password">New Password:</label>
+                <input type="password" id="new-password" name="new-password" required>
+            </div>
+
+            <button type="submit">Save Changes</button>
+        </form>
     </div>
-    <input type="hidden" name="id_field" id="selectedField" value="">
-</form>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var fieldOptions = document.querySelectorAll('.field-option');
-
-        fieldOptions.forEach(function (option) {
-            option.addEventListener('click', function () {
-                var fieldId = option.getAttribute('data-id');
-                document.getElementById('selectedField').value = fieldId;
-                document.getElementById('fieldForm').submit();
-            });
-        });
-    });
-</script>
 
 </body>
 
 </html>
-

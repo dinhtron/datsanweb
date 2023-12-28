@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers; 
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     public function showLoginForm()
@@ -16,17 +16,18 @@ class AuthController extends Controller
     {
         $username = $request->input('username');
         $password = $request->input('password');
-
+    
         $user = User::where('taikhoan', $username)->first();
-
-        if ($user && $password === $user->password) {
-            // Kiểm tra mật khẩu trực tiếp không được khuyến khích, hãy sử dụng Hash::check
-            // Nhưng nếu bạn vẫn muốn kiểm tra mật khẩu trực tiếp, sử dụng ===
-            
-            // Lưu ý: Đây là tác vụ không an toàn, bạn nên sử dụng Hash::check để kiểm tra mật khẩu an toàn hơn.
-            $id = $user->id_user;
-            $taikhoan= $user->taikhoan;
-            return redirect()->route('home', ['id' => $id, 'taikhoan' => $taikhoan]);
+    
+        if ($user && Hash::check($password, $user->password)) {
+            if ($user->trangthai === 'hoatdong') {
+                $id = $user->id_user;
+                $taikhoan = $user->taikhoan;
+                Session::put('id', $id);
+                return redirect()->route('home');
+            } else {
+                return redirect()->route('login')->with('error', 'Xin lỗi! Tài Khoản của bạn bị khóa');
+            }
         } else {
             // Login failed
             return redirect()->route('login')->with('error', 'Tên đăng nhập hoặc mật khẩu không đúng!');

@@ -63,9 +63,10 @@
 
     <nav>
         <ul>
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="/admin/dashboard">Dashboard</a></li>
             <li><a href="/admin/users">Users</a></li>
             <li><a href="/admin/donhang">Products</a></li>
+            <li><a href="/admin/sanbong">Sân Bóng</a></li>
             <li><a href="/admin/feedback">Phản hồi</a></li>
         </ul>
     </nav>

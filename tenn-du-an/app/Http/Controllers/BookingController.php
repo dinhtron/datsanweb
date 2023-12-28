@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
-    public function showBookingForm(Request $request, $id_user, $id_sanbong)
-    {
+    public function showBookingForm(Request $request, $id_sanbong)
+    {   $id_user= Session::get('id');
+         $giasan = DB::table('sanbong')->where('id_sanbong', $id_sanbong)->value('giasan');
         // Fetch user details
         $user = DB::table('users')->where('id_user', $id_user)->first();
 
@@ -19,7 +20,9 @@ class BookingController extends Controller
         $email = $user->email;
         $taikhoan = $user->taikhoan;
 
-        $bookings = DB::table('bookings')->get();
+        $bookings = DB::table('bookings')
+        ->where('id_san', $id_sanbong)
+        ->get();
 
         if ($request->isMethod('post')) {
             // Xử lý form được gửi đi
@@ -28,7 +31,7 @@ class BookingController extends Controller
             $checkout_time = $request->input('checkout_time');
 
             // Tính giá và thêm đơn đặt sân
-            $price = $this->calculatePrice(strtotime($checkin_date . ' ' . $checkin_time), strtotime($checkin_date . ' ' . $checkout_time));
+            $price = $this->calculatePrice(strtotime($checkin_date . ' ' . $checkin_time), strtotime($checkin_date . ' ' . $checkout_time),$giasan);
 
             $existingBooking = DB::table('bookings')
                 ->where('checkin_date', $checkin_date)
@@ -44,9 +47,17 @@ class BookingController extends Controller
                         });
                 })
                 ->first();
-
+            if (strtotime($checkout_time) <= strtotime($checkin_time)) {
+                    $request->session()->flash('bookingAdded2', true);
+                    $request->session()->flash('bookingAdded1', false);
+                    $request->session()->flash('bookingAdded', false);
+                    return view('booking.form', compact('id_user', 'id_sanbong', 'email', 'taikhoan', 'bookings','giasan'));
+                } 
             if ($existingBooking) {
-                return "Khoảng thời gian đã được đặt. Vui lòng chọn khoảng thời gian khác.";
+                $request->session()->flash('bookingAdded', false);
+                $request->session()->flash('bookingAdded2', false);
+                $request->session()->flash('bookingAdded1', true);
+                return view('booking.form', compact('id_user', 'id_sanbong', 'email', 'taikhoan', 'bookings','giasan'));
             } else {
                 DB::table('bookings')->insert([
                     'taikhoan' => $taikhoan,
@@ -58,19 +69,22 @@ class BookingController extends Controller
                     'price' => $price,
                     'id_san' => $id_sanbong,
                 ]);
-
-                return "Đơn hàng đã được thêm vào giỏ hàng.";
+                $request->session()->flash('bookingAdded1', false);
+                $request->session()->flash('bookingAdded2', false);
+                $request->session()->flash('bookingAdded', true);
+                return view('booking.form', compact('id_user', 'id_sanbong', 'email', 'taikhoan', 'bookings','giasan'));
             }
         }
-
-        return view('booking.form', compact('id_user', 'id_sanbong', 'email', 'taikhoan', 'bookings'));
+        $request->session()->flash('bookingAdded2', false);
+        $request->session()->flash('bookingAdded1', false);
+        $request->session()->flash('bookingAdded', false);
+        return view('booking.form', compact('id_user', 'id_sanbong', 'email', 'taikhoan', 'bookings','giasan'));
     }
 
-    private function calculatePrice($checkin_datetime, $checkout_datetime)
+    private function calculatePrice($checkin_datetime, $checkout_datetime,$hourly_rate)
     {
         // Thêm logic giá của bạn ở đây
         $hours_difference = ($checkout_datetime - $checkin_datetime) / 3600; // Chuyển đổi giây thành giờ
-        $hourly_rate = 10; // Đặt giá theo giờ của bạn
         $price = $hours_difference * $hourly_rate;
 
         return $price;

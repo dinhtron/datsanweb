@@ -9,11 +9,5 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
-    public function showBookings($id)
-    {
-    $bookings = \DB::table('bookings')->where('id_user', $id)->get();
-
-    return view('bookings', compact('bookings'));
-    }
 
 }

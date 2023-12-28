@@ -1,46 +1,66 @@
 <?php
-// app/Http/Controllers/YourController.php
-
+// app/Http/Controllers/YourController.ph
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Session;
 
+// ...
+
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 class YourController extends Controller
 {
-    public function showBookings($id)
-    {
+    public function showBookings()
+    {   $id = Session::get('id');
         // Logic to retrieve data from the database
         $bookings = \DB::table('bookings')->where('id_user', $id)->get();
-
+        $id_user = $id;
+    
         // Convert the stdClass objects to an array
         $bookings = json_decode(json_encode($bookings), true);
-
+    
         // Return view with data
-        return view('bookings', compact('bookings'));
-    }   
+        return view('bookings', compact('bookings', 'id_user'));
+    }
     public function showRegistrationForm()
     {
         return view('register');
     }
-
     public function register(Request $request)
     {
         // Lấy dữ liệu từ form đăng ký
         $tai_khoan = $request->input('tai_khoan');
         $mat_khau = $request->input('mat_khau');
         $email = $request->input('email');
-
-        // Truy vấn SQL để thêm người dùng mới vào bảng users
+        $so_dt = $request->input('so_dt');
+    
+        // Kiểm tra xem email hoặc số điện thoại đã tồn tại chưa
+        $existingUser = DB::table('users')
+            ->where('email', $email)
+            ->orWhere('so_dt', $so_dt)
+            ->first();
+    
+        if ($existingUser) {
+            // Nếu email hoặc số điện thoại đã tồn tại, chuyển hướng về trang đăng ký và hiển thị thông báo lỗi
+            return Redirect::to('/register')->with('error', 'Email hoặc số điện thoại đã tồn tại. Vui lòng chọn thông tin khác.');
+        }
+    
+        // Mã hóa mật khẩu bằng bcrypt trước khi lưu vào cơ sở dữ liệu
+        $hashedPassword = Hash::make($mat_khau);
+    
+        // Thêm người dùng mới vào bảng users
         DB::table('users')->insert([
             'taikhoan' => $tai_khoan,
-            'password' => $mat_khau,
+            'password' => $hashedPassword,
             'email' => $email,
+            'so_dt' => $so_dt,
         ]);
-
-        return "Đăng ký thành công!";
+    
+        return Redirect::to('/login')->with('success', 'Đăng ký thành công!');
     }
-    public function showSelectFieldForm($id)
-    {
+    public function showSelectFieldForm()
+    {    $id = Session::get('id');
         $fields = DB::table('sanbong')->get();
         return view('select_field', ['id_user' => $id, 'fields' => $fields]);
     }
@@ -153,4 +173,15 @@ class YourController extends Controller
 
         return $price;
     }
+    public function logout()
+        {
+            // Xóa giá trị 'id' khỏi session
+            Session::forget('id');
+
+            // Thực hiện các công việc khác khi đăng xuất (nếu cần)
+
+            // Chuyển hướng người dùng về trang chủ hoặc trang đăng nhập
+            return redirect()->route('home');
+        }
+    
 }

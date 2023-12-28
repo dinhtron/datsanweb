@@ -1,39 +1,36 @@
 <?php
-// app/Http/Controllers/FeedbackController.php
-
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FeedbackController extends Controller
 {
-    public function showFeedbackForm($id)
+    public function showFeedbackForm()
     {
-        $userInfo = $this->getUserInfo($id);
+        $feedbackSubmitted = session('feedbackSubmitted', false);
 
-        return view('feedback.form', ['userInfo' => $userInfo]);
+
+        return view('feedback_form', compact('feedbackSubmitted'));
     }
 
-    public function submitFeedback(Request $request, $id)
-    {
-        $userInfo = $this->getUserInfo($id);
+    public function submitFeedback(Request $request)
+    {   $id = Session::get('id');
+        $feedback = $request->input('feedback-input');
+        $feedbackItem = DB::table('users')
+        ->select('taikhoan', 'email')
+        ->where('id_user', $id)
+        ->first();
+        $email = $feedbackItem->email;
+        $taikhoan=$feedbackItem->taikhoan;
+        // Perform necessary actions with feedback (e.g., save to the database)
+        DB::table('phanhoi')->insert(['taikhoan'=>$taikhoan,'email'=>$email,'thongtin_phanhoi' => $feedback]);
 
-        $thongtin_phanhou = $request->input('thongtin_phanhou');
+        // Mark that feedback has been submitted
+        $request->session()->flash('feedbackSubmitted', true);
 
-        // Thêm thông tin vào cơ sở dữ liệu
-        DB::table('phanhoi')->insert([
-            'id_user' => $id,
-            'taikhoan' => $userInfo->taikhoan,
-            'email' => $userInfo->email,
-            'thongtin_phanhoi' => $thongtin_phanhou,
-        ]);
-
-        return "Phản hồi đã được gửi thành công!";
-    }
-
-    private function getUserInfo($id)
-    {
-        return DB::table('users')->select('id_user','taikhoan', 'email')->where('id_user', $id)->first();
+        // Redirect the user to the feedback page
+        return redirect()->route('feedback.form');
+    
     }
 }

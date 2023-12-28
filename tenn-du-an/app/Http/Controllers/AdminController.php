@@ -24,7 +24,7 @@ class AdminController extends Controller
 
         if (!empty($result)) {
             // Đăng nhập thành công
-            return redirect()->route('admin.admin');
+            return redirect()->route('admin.dashboard');
         } else {
             // Đăng nhập thất bại
             return view('admin.login')->with('error', 'Tên đăng nhập hoặc mật khẩu không đúng!');

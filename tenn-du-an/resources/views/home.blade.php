@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>User Dashboard</title>
     <style>
         body {
@@ -14,7 +15,8 @@
         }
 
         nav {
-            background-color: #333;
+            background: linear-gradient(to bottom, #FAFAD2, white);
+            /* background-color: #87CEFA; */
             padding: 10px;
             text-align: center;
             display: flex;
@@ -29,13 +31,12 @@
         }
 
         nav a {
-            color: white;
+            color: #00AA00;
             text-decoration: none;
             margin: 0 10px;
         }
 
         .nav-container {
-            
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -79,23 +80,31 @@
         }
 
         .container {
-            max-width: 800px;
+            margin-bottom: 20px;
+            max-width: 20;
+            background-size: cover; /* Hiển thị hình nền toàn bộ */
             margin: 20px auto;
-            background-color: white;
             padding: 20px;
             border-radius: 5px;
+            
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .pricing-container {
+            
             max-width: 600px;
             margin: 20px auto;
-            background-color: white;
+            background-color: #00FF99;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
+        .box{
+            
+            display: flex;
+           justify-content: space-between; /* Điều chỉnh theo nhu cầu */
+            margin-left: 50px;
+        }
         .price-table {
             width: 100%;
             border-collapse: collapse;
@@ -119,12 +128,14 @@
         }
 
         .intro-container {
+             margin-bottom: 200px;
             max-width: 800px;
             margin: 20px auto;
             background-color: white;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            
         }
 
         .contact-info {
@@ -133,54 +144,82 @@
             padding-top: 20px;
             text-align: center;
         }
+  
+
+
+        .slider {
+
+            position: relative;
+            width: 100%;
+            max-width: 100%; /* Adjust the maximum width as needed */
+            margin: auto;
+        }
+
+        .slider img {
+            margin-top: 50px;
+            width: 100%;
+            height: auto;
+            display: none;
+        }
     </style>
 </head>
 
 <body>
 <?php
-    if (isset($taikhoan)) {
+    if (isset($id)) {
 
     }else{
-        $taikhoan=null;
         $id=null;
     }
 ?>
 <!-- header.php -->
 <nav class="nav-container">
     <img src="https://makan.vn/wp-content/uploads/2022/11/logo-da-banh-vector-1.jpg" alt="Logo">
-    <a href="home.php">Trang chủ</a>
-    <a href="{{ url('/select-field', $id) }}">Đặt Sân</a>
-    <a href="#">Sản phẩm</a>
-    <a href=" {{ url('/feedback', $id) }}/">Phản hồi</a>
+    <a href="{{ url('/home', $id) }}"><i class="fas fa-home"></i> Trang chủ</a>
+    <a href="{{ isset($id) ? url('/select-field') : 'javascript:showError()' }}"><i class="fas fa-futbol"></i> Đặt Sân</a>
+    <a href="#"><i class="fas fa-shopping-bag"></i> Sản phẩm</a>
+    <a href="{{ isset($id) ? url('/feedback') : 'javascript:showError()' }}"><i class="fas fa-check"></i> Phản hồi</a>
+
+    <script>
+        function showError() {
+            alert("Lỗi: Không có ID được cung cấp.");
+        }
+    </script>
     <!-- Profile Dropdown -->
     <?php
-    if (isset($taikhoan)) {
+    if ( session('id') ) {
     ?>
         <div class="profile-dropdown">
-            <a href="#" class="logout">{{$taikhoan}}</a>
+            <a href="#" class="logout"><i class="fas fa-user"></i> Tài Khoản</a>
             <div class="dropdown-content">
-                <a href="{{ url('/user', $id) }}" class="logout">Thông Tin</a>
-                <a href="{{ url('/bookings', $id) }}" class="logout">Lịch Sử</a>
+                <a href="{{ url('/update-account') }}" class="logout"><i class="fas fa-exclamation-triangle"></i> Thông Tin</a>
+                <a href="{{ url('/bookings') }}" class="logout"><i class="fas fa-history"></i> Lịch Sử</a>
             </div>
-            <a href="/home" class="logout">Đăng Xuất</a>
+            <a href="{{ route('logout') }}" class="logout"><i class="fas fa-sign-out-alt"></i> Đăng Xuất</a>
         </div>
     <?php
     }else{
     ?>
         <div class="profile-dropdown">
-            <a href="/login" class="logout">Đăng Nhập</a>
+            <a href="/login" class="logout"><i class="fas fa-sign-in-alt"></i> Đăng Nhập</a>
         </div>
     <?php
     }
     ?>
 
 </nav>
+
+<div class="box">
     <div class="container">
-        <h2>Chào mừng đến web đặt sân</h2>
+    <div class="slider">
+            <img src="images/slide2.jpg" alt="Ảnh">
+            <img src="images/OIG.jpg" alt="Ảnh">     
+    </div>
+    </div>
+    <div class="container">
 
         <div class="intro-container">
             <h1>Welcome to our Soccer Field Booking Website</h1>
-            <p>Experience the convenience of booking soccer fields online with our user-friendly platform. Whether you're a casual player or part of a team, our website makes it easy to find and reserve soccer fields at your preferred location. Explore our pricing options below and secure your spot for an exciting game of soccer!</p>
         </div>
 
         <div class="pricing-container">
@@ -211,13 +250,41 @@
             </table>
         </div>
 
-        <div class="contact-info">
+ 
+    </div>
+    </div>
+           <div class="contact-info">
             <h3>Liên hệ</h3>
             <p>Địa chỉ: 123 Đường ABC, Quận XYZ, Thành phố ABC</p>
             <p>Email: info@example.com</p>
             <p>Điện thoại: 123-456-7890</p>
         </div>
-    </div>
+        <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const slider = document.querySelector(".slider");
+        const images = document.querySelectorAll(".slider img");
+
+        let currentIndex = 0;
+
+        function showImage(index) {
+            images.forEach((img, i) => {
+                img.style.display = i === index ? "block" : "none";
+            });
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        }
+
+        // Set an interval to switch images every 3 seconds (adjust as needed)
+        setInterval(nextImage, 5000);
+
+        // Show the initial image
+        showImage(currentIndex);
+    });
+             
+        </script>
 </body>
 
 </html>
