@@ -1,12 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <title>User Dashboard</title>
+    <title>Danh sách sản phẩm</title>
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 15px;
+        }
+
+        img {
+            width: 100%;
+            height: 300px; /* Set a fixed height for the images */
+            object-fit: cover;
+        }
+
+        .product-container {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            margin: 20px;
+        }
+
+        .product-card {
+            width: calc(22% - 20px); /* Calculate 33.33% minus margin */
+            border: 1px solid #ddd;
+            margin: 10px;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            display: flex; /* Added */
+            flex-direction: column; /* Added */
+            align-items: center; /* Added */
+        }
+
+        .product-card p {
+            margin: 8px 0;
+        }
+
+        .select-btn {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+        <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -161,18 +241,13 @@
             height: auto;
             display: none;
         }
+        .select-btn:hover {
+            background-color: #45a049; /* Change to the desired hover color */
+        }
     </style>
 </head>
 
 <body>
-<?php
-    if (isset($id)) {
-
-    }else{
-        $id=null;
-    }
-?>
-<!-- header.php -->
 <nav class="nav-container">
     <img src="https://makan.vn/wp-content/uploads/2022/11/logo-da-banh-vector-1.jpg" alt="Logo">
     <a href="{{ url('/home', $id) }}"><i class="fas fa-home"></i> Trang chủ</a>
@@ -208,84 +283,57 @@
     ?>
 
 </nav>
+    <header>
+        <h1>Danh sách sản phẩm</h1>
+    </header>
 
-<div class="box">
-    <div class="container">
-    <div class="slider">
-    @foreach ($slides as $slide)
-             <img src="{{ asset('storage/' . $slide->img) }}" alt="{{ $slide->name }}" >
-     @endforeach
-    </div>
-    </div>
-    <div class="container">
+    <div class="product-container">
+        @php $count = 0; @endphp
+        @foreach($sanpham as $sanpham)
+        <div class="product-card" data-id="{{ $sanpham->id_sanpham }}">
+            <img src="{{ $sanpham->hinhanh }}" alt="{{ $sanpham->tensanpham }}">
+            <p><strong>Tên sản phẩm:</strong> {{ $sanpham->tensanpham }}</p>
+            <p><strong>Giá:</strong> {{ $sanpham->gia }}</p>
 
-        <div class="intro-container">
-            <h1>Welcome to our Soccer Field Booking Website</h1>
+            <button class="select-btn">Chọn</button>
         </div>
-
-        <div class="pricing-container">
-            <h2>Soccer Field Price List</h2>
-            <h2>User ID: {{ $id }}</h2>
-            <table class="price-table">
-                <thead>
-                    <tr>
-                        <th>Field Type</th>
-                        <th>Price per Hour</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Grass Field</td>
-                        <td>$20</td>
-                    </tr>
-                    <tr>
-                        <td>Artificial Turf</td>
-                        <td>$25</td>
-                    </tr>
-                    <tr>
-                        <td>Indoor Field</td>
-                        <td>$30</td>
-                    </tr>
-                    <!-- Add more rows for additional field types -->
-                </tbody>
-            </table>
-        </div>
-
- 
+        @endforeach
     </div>
-    </div>
-           <div class="contact-info">
-            <h3>Liên hệ</h3>
-            <p>Địa chỉ: 123 Đường ABC, Quận XYZ, Thành phố ABC</p>
-            <p>Email: info@example.com</p>
-            <p>Điện thoại: 123-456-7890</p>
-        </div>
-        <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const slider = document.querySelector(".slider");
-        const images = document.querySelectorAll(".slider img");
 
-        let currentIndex = 0;
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.select-btn').click(function () {
+                var productId = $(this).closest('.product-card').data('id');
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-        function showImage(index) {
-            images.forEach((img, i) => {
-                img.style.display = i === index ? "block" : "none";
+                $.ajax({
+                    type: 'POST',
+                    url: '/select-product',
+                    data: {
+                        productId: productId,
+                        _token: csrfToken
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = '/giohang/' + response.productId;
+                        } else {
+                            console.error('Lỗi chọn sản phẩm:', response.error);
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Lỗi chọn sản phẩm:', error.responseText);
+                    }
+                });
             });
-        }
+        });
+    </script>
+    
+    <footer>
+        © 2023 Your Company Name. All rights reserved.
+    </footer>
 
-        function nextImage() {
-            currentIndex = (currentIndex + 1) % images.length;
-            showImage(currentIndex);
-        }
-
-        // Set an interval to switch images every 3 seconds (adjust as needed)
-        setInterval(nextImage, 5000);
-
-        // Show the initial image
-        showImage(currentIndex);
-    });
-             
-        </script>
 </body>
 
 </html>

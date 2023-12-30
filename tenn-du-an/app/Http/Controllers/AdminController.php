@@ -40,4 +40,26 @@ class AdminController extends Controller
         $bookings = DB::table('bookings')->get();
         return view('admin.dashboard', ['bookings' => $bookings]);
     }
+
+    public function create()
+    {
+        return view('products.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'tensanpham' => 'required|string',
+            'gia' => 'required|numeric',
+            'hinhanh' => 'required|string',
+        ]);
+
+        DB::table('sanpham')->insert([
+            'tensanpham' => $request->input('tensanpham'),
+            'gia' => $request->input('gia'),
+            'hinhanh' => $request->input('hinhanh'),
+        ]);
+
+        return redirect()->route('products.create')->with('success', 'Sản phẩm đã được thêm vào cơ sở dữ liệu thành công');
+    }
 }

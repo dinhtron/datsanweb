@@ -177,7 +177,7 @@
     <img src="https://makan.vn/wp-content/uploads/2022/11/logo-da-banh-vector-1.jpg" alt="Logo">
     <a href="{{ url('/home') }}"><i class="fas fa-home"></i> Trang chủ</a>
     <a href="{{ isset($id_user) ? url('/select-field') : 'javascript:showError()' }}"><i class="fas fa-futbol"></i> Đặt Sân</a>
-    <a href="#"><i class="fas fa-shopping-bag"></i> Sản phẩm</a>
+    <a href="{{ isset($id_user) ? url('/sanpham') : 'javascript:showError()' }}"><i class="fas fa-shopping-bag"></i> Sản phẩm</a>
     <a href="{{ isset($id_user) ? url('/feedback') : 'javascript:showError()' }}"><i class="fas fa-check"></i> Phản hồi</a>
 
     <script>
@@ -208,10 +208,11 @@
     ?>
 
 </nav>
+
 @section('content')
     <h2>Danh sách Sân đã đặt</h2>
 
-    @if (!empty($bookings))
+    @if (!empty($donhang))
         <table border="1">
             <thead>
                 <tr>
@@ -234,6 +235,35 @@
     @else
         <p>Hiện chưa có sân nào được đặt.</p>
     @endif
+
+    @section('content')
+    <h2>Danh sách Sản phẩm đã đặt</h2>
+
+    @if (!empty($donhang))
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Tên Đơn Hàng</th>
+                    <th>Số Lượng</th>
+                    <th>Tổng Tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($donhang as $donhang)
+                    <tr>
+                        <td>{{ $donhang->tendonhang }}</td>
+                        <td>{{ $donhang->soluong }}</td>
+                        <td>{{ $donhang->gia }}</td>
+                        
+                        
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p>Hiện chưa có sân nào được đặt.</p>
+    @endif
+   
 </body>
 
 </html>

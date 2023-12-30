@@ -16,12 +16,13 @@ class YourController extends Controller
         // Logic to retrieve data from the database
         $bookings = \DB::table('bookings')->where('id_user', $id)->get();
         $id_user = $id;
-    
+        $donhang = \DB::table('donhang')->where('id', $id)->get();
         // Convert the stdClass objects to an array
         $bookings = json_decode(json_encode($bookings), true);
     
         // Return view with data
-        return view('bookings', compact('bookings', 'id_user'));
+        return view('bookings', compact('bookings', 'id_user','donhang'));
+       
     }
     public function showRegistrationForm()
     {

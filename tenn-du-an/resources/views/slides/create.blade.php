@@ -1,4 +1,5 @@
-
+<!-- resources/views/slides/create.blade.php -->
+<!-- resources/views/slides/create.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,7 +62,6 @@
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
-            display: flex;
             flex-direction: row; /* Hiển thị các ô nằm ngang */
             justify-content: space-between; /* Canh chỉnh khoảng cách giữa các ô */
         }
@@ -90,7 +90,42 @@
             background-color: #ea6d6d;
             color: #fff;
         }
-                    </style>
+    </style>
+    <style>
+    h2 {
+        color: #333;
+    }
+
+    form {
+        max-width: 400px;
+        margin: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+
     <title>Admin Dashboard</title>
 </head>
 <body>
@@ -112,21 +147,21 @@
 
 
     <section id="main-content">
-    <div class="stat-box">
-        <p>Người dùng</p>
-        <p> {{ $totalUsers }}</p>
-    </div>
+    <h2>Thêm Slide</h2>
 
-    <div class="stat-box">
-        <p>Doanh Thu</p>
-        <p> {{ number_format($totalPrice, 0, ',', '.') }} Đồng</p>
-    </div>
+        <form action="{{ route('slides.store') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <label for="name">Tên Slide:</label>
+            <input type="text" id="name" name="name" required><br>
 
-    <div class="stat-box">
-        <p>Số Sân</p>
-        <p> {{ $totalSanbong }}</p>
-    </div>
-</section>
+            <label for="img">Ảnh Slide:</label>
+            <input type="file" id="img" name="img" accept="image/*" required><br>
+            <input type="hidden" id="thoigianupanh" name="thoigianupanh" value="{{ now() }}">
+            <!-- Thời gian up ảnh tự động sẽ được cập nhật trong controller -->
+
+            <button type="submit">Thêm Slide</button>
+        </form>
+    </section>
 
     <footer>
         <p>&copy; 2023 Admin Dashboard</p>

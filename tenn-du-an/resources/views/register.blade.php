@@ -208,7 +208,7 @@ a:hover {
     <img src="https://makan.vn/wp-content/uploads/2022/11/logo-da-banh-vector-1.jpg" alt="Logo">
     <a href="{{ url('/home') }}"><i class="fas fa-home"></i> Trang chủ</a>
     <a href="{{ isset($id) ? url('/select-field') : 'javascript:showError()' }}"><i class="fas fa-futbol"></i> Đặt Sân</a>
-    <a href="#"><i class="fas fa-shopping-bag"></i> Sản phẩm</a>
+    <a href="{{ isset($id) ? url('/sanpham') : 'javascript:showError()' }}"><i class="fas fa-shopping-bag"></i> Sản phẩm</a>
     <a href="{{ isset($id) ? url('/feedback') : 'javascript:showError()' }}"><i class="fas fa-check"></i> Phản hồi</a>
 
     <script>

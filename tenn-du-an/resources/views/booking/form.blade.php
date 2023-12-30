@@ -324,15 +324,65 @@
     <input type="date" name="checkin_date" required min="{{ \Carbon\Carbon::now()->toDateString() }}"><br>
 
     <label for="checkin_time">Giờ Check-in:</label>
-    <input type="time" name="checkin_time" ><br>
-
+    <input type="time" name="checkin_time" required="calculatePrice();"><br>
     <label for="checkout_time">Giờ Check-out:</label>
-    <input type="time" name="checkout_time" ><br>
-
+    <input type="time" name="checkout_time" id="checkout_time" required onchange="calculatePrice();"><br>
     <input type="submit" value="Thêm">
+    <div id="calculatedPrice"></div>
 </form>
 
 <script>
+   function calculatePrice() {
+            // Lấy giờ check-in và check-out
+            var checkinTime = document.getElementsByName("checkin_time")[0].value;
+            var checkoutTime = document.getElementById("checkout_time").value;
+
+            // Thực hiện logic tính giá của bạn ở đây
+            var price = calculatePriceLogic(checkinTime, checkoutTime);
+
+            // Hiển thị giá tính toán trên màn hình
+            var calculatedPriceDiv = document.getElementById("calculatedPrice");
+            if(price.toFixed(2)>0){
+                calculatedPriceDiv.innerHTML = "Giá Tính Toán: $" + price.toFixed(2);
+            }
+            else{
+                calculatedPriceDiv.innerHTML= "Xin vui lòng đặt lại vì đã bao gồm giờ nghĩ của sân hoặc giờ checin trước giờ check out"
+            }
+            
+
+            // Tạo trường input ẩn để lưu giá tính toán
+            var hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.name = "price";
+            hiddenInput.value = price;
+
+            // Xóa bất kỳ trường input ẩn đã thêm trước đó (tuỳ chọn)
+            var existingInput = document.getElementsByName("price")[0];
+            if (existingInput) {
+                existingInput.parentNode.removeChild(existingInput);
+            }
+
+            // Thêm trường input ẩn vào form
+            document.forms[0].appendChild(hiddenInput);
+        }
+        function calculatePriceLogic(checkinTime, checkoutTime) {
+
+            var rate = {{ $giasan }}; // Thay thế bằng mức giá thực tế của bạn
+            var diffInHours = calculateHourDifference(checkinTime, checkoutTime);
+
+            return rate * diffInHours;
+        }
+
+        function calculateHourDifference(start, end) {
+            var startTime = new Date("2000-01-01 " + start);
+            var endTime = new Date("2000-01-01 " + end);
+
+            // Tính hiệu số giờ chênh lệch
+            var diffInMilliseconds = endTime - startTime;
+            var diffInHours = diffInMilliseconds / (1000 * 60 * 60);
+
+            return diffInHours;
+        }
     function keepOnlyMinutes(input) {
         var time = input.value.split(':');
         input.value = time[0] + ':' + time[1];

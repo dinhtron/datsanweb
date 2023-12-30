@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,7 +62,6 @@
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
-            display: flex;
             flex-direction: row; /* Hiển thị các ô nằm ngang */
             justify-content: space-between; /* Canh chỉnh khoảng cách giữa các ô */
         }
@@ -91,6 +91,47 @@
             color: #fff;
         }
                     </style>
+        <style>
+    h2 {
+        color: #333;
+    }
+
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    img {
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    button {
+        background-color: #ff3333;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #cc0000;
+    }
+</style>
+
     <title>Admin Dashboard</title>
 </head>
 <body>
@@ -112,24 +153,40 @@
 
 
     <section id="main-content">
-    <div class="stat-box">
-        <p>Người dùng</p>
-        <p> {{ $totalUsers }}</p>
-    </div>
+        <!-- resources/views/slides/index.blade.php -->
 
-    <div class="stat-box">
-        <p>Doanh Thu</p>
-        <p> {{ number_format($totalPrice, 0, ',', '.') }} Đồng</p>
-    </div>
+<!-- resources/views/slides/index.blade.php -->
+<h2>Danh sách Slide</h2>
+<a href="{{ route('slides.create') }}">Thêm Slide Mới</a>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Tên Slide</th>
+        <th>Hình Ảnh</th>
+        <th>Thời Gian Upload Ảnh</th>
+        <th>Xóa</th>
+    </tr>
+    @foreach ($slides as $slide)
+        <tr>
+            <td>{{ $slide->id }}</td>
+            <td>{{ $slide->name }}</td>
+            <td>
+            <img src="{{ asset('storage/' . $slide->img) }}" alt="Hình ảnh của {{ $slide->name }}" style="max-width: 100px; max-height: 100px;">
 
-    <div class="stat-box">
-        <p>Số Sân</p>
-        <p> {{ $totalSanbong }}</p>
-    </div>
-</section>
+            <td>{{ $slide->thoigianupanh }}</td>
+            <td>
+                <form action="{{ route('slides.destroy', $slide->id) }}" method="post">
+                    @csrf
+                    @method('delete')
+                    <button type="submit">Xóa</button>
+                </form>
+            </td>
+        </tr>
+    @endforeach
+</table>
+    </section>
 
-    <footer>
-        <p>&copy; 2023 Admin Dashboard</p>
-    </footer>
 </body>
 </html>
+
+
