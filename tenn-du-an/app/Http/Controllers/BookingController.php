@@ -9,7 +9,12 @@ class BookingController extends Controller
 {
     public function showBookingForm(Request $request, $id_sanbong)
     {   $id_user= Session::get('id');
-         $giasan = DB::table('sanbong')->where('id_sanbong', $id_sanbong)->value('giasan');
+        $sanbongInfo = DB::table('sanbong')
+        ->select('giasan', 'opening_time', 'closing_time')
+        ->where('id_sanbong', $id_sanbong)
+        ->first();
+    
+        $giasan = $sanbongInfo->giasan;
         // Fetch user details
         $user = DB::table('users')->where('id_user', $id_user)->first();
 
@@ -47,6 +52,20 @@ class BookingController extends Controller
                         });
                 })
                 ->first();
+             
+                $allowedCheckinStartTime = strtotime($sanbongInfo->opening_time);
+                $allowedCheckinEndTime = strtotime($sanbongInfo->closing_time);
+            
+                $checkin_time1 = strtotime($request->input('checkin_time'));
+                $checkout_time1 = strtotime($request->input('checkout_time'));
+                if ($checkin_time1 < $allowedCheckinStartTime || $checkout_time1 > $allowedCheckinEndTime) {
+                    // Thông báo lỗi nếu giờ checkin không hợp lệ
+                    $request->session()->flash('bookingAdded', false);
+                    $request->session()->flash('bookingAdded1', false);
+                    $request->session()->flash('bookingAdded2',false);
+                    $request->session()->flash('bookingAdded3', true);
+                    return view('booking.form', compact('id_user', 'id_sanbong', 'email', 'taikhoan', 'bookings', 'giasan'));
+                }
             if (strtotime($checkout_time) <= strtotime($checkin_time)) {
                     $request->session()->flash('bookingAdded2', true);
                     $request->session()->flash('bookingAdded1', false);

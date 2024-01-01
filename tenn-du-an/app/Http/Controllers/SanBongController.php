@@ -23,6 +23,9 @@ class SanBongController extends Controller
         $validatedData = $request->validate([
             'ten_sanbong' => 'required',
             'giasan' => 'required',
+            'thongtin' => 'required',
+            'opening_time' => 'required',
+            'closing_time' => 'required',
         ]);
 
         // Insert the validated data into the 'sanbong' table

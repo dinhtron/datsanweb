@@ -234,8 +234,10 @@ h2 {
     <div class="field-options">
         @foreach ($fields as $field)
         <div class="field-option" data-id="{{ $field->id_sanbong }}">
-            <span style="white-space: nowrap;">{{ $field->ten_sanbong }}</span>
+            <span style="white-space: nowrap; display: block; font-weight: bold;">{{ $field->ten_sanbong }}</span>
+            <span style="white-space: nowrap; display: block;">{{ $field->thongtin }}</span>
         </div>
+
 
         @endforeach
     </div>

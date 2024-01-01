@@ -146,6 +146,7 @@
         <th>ID</th>
         <th>Giá Sân</th>
         <th>Tên Sân Bóng</th>
+        <th>Mô tả</th>
         <th>Xóa</th>
     </tr>
     @foreach ($sanbongs as $sanbong)
@@ -153,6 +154,7 @@
             <td>{{ $sanbong->id_sanbong }}</td>
             <td>{{ $sanbong->giasan }}</td>
             <td>{{ $sanbong->ten_sanbong }}</td>
+            <td>{{ $sanbong->thongtin }}</td>
             <td><a href="{{ url('/delete-san-bong', $sanbong->id_sanbong) }}">Xóa</a></td>
         </tr>
     @endforeach
@@ -166,6 +168,13 @@
     <input type="text" name="ten_sanbong" required>
     <label for="giasan">Giá Sân:</label>
     <input type="text" name="giasan" required>
+    <label for="thongtin">Mô Tả:</label>
+    <input type="text" name="thongtin" required>
+    <label for="opening_time">Thời Gian Mở Cửa:</label>
+    <input type="time" name="opening_time" required>
+
+    <label for="closing_time">Thời Gian Đóng Cửa:</label>
+    <input type="time" name="closing_time" required>
     <button type="submit">Thêm Sân Bóng</button>
 </form>
 

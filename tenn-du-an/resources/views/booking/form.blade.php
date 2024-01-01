@@ -252,7 +252,9 @@
     border: 1px solid #f5c6cb;
     border-radius: 4px;
    }
-
+   #checkout_time {
+    text-transform: uppercase; /* Chuyển đổi tất cả văn bản thành chữ in hoa */
+}
     </style>
 </head>
 
@@ -315,6 +317,11 @@
     @if(session('bookingAdded2'))
             <div class="alert_successoiị">
                Thời gian check out phải lớn hơn check in!
+            </div>
+    @endif
+    @if(session('bookingAdded3'))
+            <div class="alert_successoiị">
+               Thời gian sân đóng cửa!
             </div>
     @endif
     @csrf <!-- Thêm CSRF token để bảo vệ form -->
@@ -413,23 +420,21 @@
     @if ($carbonDate->isToday() || $carbonDate->isFuture())
         <div class="booking-date" onclick="toggleBookingTable(this)">
             Ngày: {{ $date }}
-            <table class="booking-table" border="1">
+            <table class="booking-table" border="1" style='display: none'>
                 <thead>
                     <tr>
-                        <th>Giờ Check-in</th>
-                        <th>Giờ Check-out</th>
+                    <?php
+                for ($i = 1; $i <= 24; $i++) {
+                    echo "<th value=\"$i\">$i</th>";
+                }
+                ?>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($bookingsForDate as $booking)
+                        <tr></tr>
                         <tr>
-                            <td>{{ $booking->checkin_time }}</td>
-                            <td>{{ $booking->checkout_time }}</td>
-                            
-                        </tr>
-                        <!-- Timeline thêm ở đây -->
-                        <tr>
-                       <td colspan="2">
+                       <td colspan="24">
             <div class="timeline" id="timeline_{{ $loop->parent->index }}_{{ $loop->index }}"></div>
             <script>
                 var checkinTimeStr = "2023-01-01T{{ $booking->checkin_time }}";
@@ -469,10 +474,11 @@
     </div>
 
     <script>
-        function toggleBookingTable(element) {
-            var bookingTable = element.querySelector('.booking-table');
-            bookingTable.style.display = (bookingTable.style.display === 'none' || bookingTable.style.display === '') ? 'table' : 'none';
-        }
+            function toggleBookingTable(element) {
+                var bookingTable = element.querySelector('.booking-table');
+                bookingTable.style.display = (bookingTable.style.display === 'none' || bookingTable.style.display === '') ? 'table' : 'none';
+            }
+
     </script>
 
 @else
