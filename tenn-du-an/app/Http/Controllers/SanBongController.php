@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\DB;
 class SanBongController extends Controller
 {
     public function index()
-    {
+    {   $userId = session('admin_id');
+        if (!$userId) {
+            abort(404, 'Không tìm thấy');
+        }
         // Retrieve all records from the 'sanbong' table
         $sanbongs = DB::table('sanbong')->get();
 

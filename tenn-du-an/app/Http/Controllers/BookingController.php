@@ -24,11 +24,13 @@ class BookingController extends Controller
 
         $email = $user->email;
         $taikhoan = $user->taikhoan;
+        $selectedDate = session('ngayDuocChon');
 
+        // Truy vấn cơ sở dữ liệu với điều kiện ngày
         $bookings = DB::table('bookings')
-        ->where('id_san', $id_sanbong)
-        ->get();
-
+            ->where('id_san', $id_sanbong)
+            ->whereDate('checkin_date', $selectedDate)
+            ->get();
         if ($request->isMethod('post')) {
             // Xử lý form được gửi đi
             $checkin_date = $request->input('checkin_date');

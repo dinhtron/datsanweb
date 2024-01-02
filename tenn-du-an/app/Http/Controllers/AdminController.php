@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,9 +21,10 @@ class AdminController extends Controller
         // ...
 
         $result = DB::select("SELECT * FROM admin WHERE username = ? AND password = ?", [$username, $password]);
-
+     
         if (!empty($result)) {
-            // Đăng nhập thành công
+            $adminId = $result[0]->id;
+            session(['admin_id' => $adminId]);
             return redirect()->route('admin.dashboard');
         } else {
             // Đăng nhập thất bại
@@ -31,15 +32,23 @@ class AdminController extends Controller
         }
     }
     public function showFeedback()
-    {
+    {    $userId = session('admin_id');
+        if (!$userId) {
+            abort(404, 'Không tìm thấy');
+        }
         $feedbacks = DB::table('phanhoi')->get();
         return view('admin.feedback', ['feedbacks' => $feedbacks]);
     }
     public function showDashboard()
     {
+        $userId = session('admin_id');
+        if (!$userId) {
+            abort(404, 'Không tìm thấy');
+        }
         $bookings = DB::table('bookings')->get();
         return view('admin.dashboard', ['bookings' => $bookings]);
     }
+    
 
     public function create()
     {
@@ -61,5 +70,11 @@ class AdminController extends Controller
         ]);
 
         return redirect()->route('products.create')->with('success', 'Sản phẩm đã được thêm vào cơ sở dữ liệu thành công');
+    }
+    public function logout()
+    {
+        Auth::logout();
+        session()->forget('admin_id');
+        return redirect('admin/login');
     }
 }

@@ -4,168 +4,97 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>User Dashboard</title>
     <style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+            .dropdown-item:hover {
+                background-color: #ddd;
+            }
 
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
+            .container, .pricing-container, .intro-container {
+                max-width: 800px;
+                margin: 20px auto;
+                background-color: white;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
 
-nav {
-    background: linear-gradient(to bottom, #FAFAD2, white);
-    padding: 10px;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+            .price-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
 
+            .price-table th, .price-table td {
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
 
-nav a {
-    color: #00AA00;
-    text-decoration: none;
-    margin: 0 10px;
-}
-nav img {
-    margin-left: 150px;
-    width: 50px;
-    height: 50px;
-}
+            .price-table th {
+                background-color: #333;
+                color: white;
+            }
 
-.nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
+            .price-table tr:hover {
+                background-color: #f5f5f5;
+            }
 
-nav a.logout {
-    margin-right: 10px;
-    margin-left: 10px;
-}
+            .contact-info {
+                margin-top: 20px;
+                border-top: 1px solid #ddd;
+                padding-top: 20px;
+                text-align: center;
+            }
 
-.profile-dropdown {
-    margin-left: auto;
-    margin-right: 150px;
-    position: relative; /* Để đặt vị trí tuyệt đối cho dropdown-content */
-}
+            h2 {
+                text-align: center;
+            }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 5px;
-}
+            form {
+                width: 300px;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                margin-left: auto; /* Đẩy sang phải */
+                margin-right: 500px;
+                margin-top: 50px;
+            }
 
-.dropdown-content a {
-    display: block;
-    margin-bottom: 10px;
-    text-decoration: none;
-    color: #333;
-    padding: 10px;
-}
+            label {
+                display: block;
+                margin-bottom: 8px;
+            }
 
-.profile-dropdown:hover .dropdown-content {
-    display: block;
-}
+            input {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 16px;
+                box-sizing: border-box;
+            }
 
-.dropdown-item:hover {
-    background-color: #ddd;
-}
+            button {
+                background-color: #4caf50;
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
 
-.container, .pricing-container, .intro-container {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+            button:hover {
+                background-color: #45a049;
+            }
 
-.price-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.price-table th, .price-table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.price-table th {
-    background-color: #333;
-    color: white;
-}
-
-.price-table tr:hover {
-    background-color: #f5f5f5;
-}
-
-.contact-info {
-    margin-top: 20px;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
-    text-align: center;
-}
-
-h2 {
-    text-align: center;
-}
-
-form {
-    width: 300px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-left: auto; /* Đẩy sang phải */
-    margin-right: 500px;
-    margin-top: 50px;
-}
-
-label {
-    display: block;
-    margin-bottom: 8px;
-}
-
-input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 16px;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: #4caf50;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-p {
-    color: #d9534f;
-    text-align: center;
-}
+            p {
+                color: #d9534f;
+                text-align: center;
+            }
 
     </style>
 </head>

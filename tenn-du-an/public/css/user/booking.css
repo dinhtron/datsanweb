@@ -1,0 +1,213 @@
+.profile-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-item:hover {
+    background-color: #ddd;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.price-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.price-table th,
+.price-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.price-table th {
+    background-color: #333;
+    color: white;
+}
+
+.price-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.intro-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+    text-align: center;
+}
+body {
+font-family: Arial, sans-serif;
+background-color: #f4f4f4;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+h2 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+thead {
+    background-color: #4caf50;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+p {
+    color: #777;
+}
+h2 {
+text-align: center;
+}
+
+.booking-dates-container {
+
+flex-wrap: wrap;
+justify-content: space-around;
+}
+
+.booking-date {
+background-color: #3498db;
+color: #fff;
+cursor: pointer;
+margin: 5px;
+padding: 10px;
+border-radius: 5px;
+}
+
+
+.timeline {
+    width: 100%;
+    height: 20px;
+    background-color: #eee;
+    position: relative;
+}
+
+
+.hidden {
+display: none;
+}
+
+.time-bar {
+background-color: #3498db;
+height: 10px;
+margin-top: 10px;
+}
+.alert_success {
+background-color: #f8d7da;
+color: #721c24;
+padding: 10px;
+margin-bottom: 15px;
+border: 1px solid #f5c6cb;
+border-radius: 4px;
+}
+#checkout_time {
+text-transform: uppercase; /* Chuyển đổi tất cả văn bản thành chữ in hoa */
+}
+/* ... (existing styles) ... */
+
+.time-labels {
+display: flex;
+justify-content: space-between;
+padding-top: 5px; /* Add some spacing above time labels */
+overflow: hidden; /* Prevent overflow */
+}
+
+.time-label {
+
+text-align: center;
+font-size: 12px; /* Adjust font size as needed */
+color: #555; /* Adjust text color as needed */
+}
+
+.time-label:first-child,
+.time-label:last-child {
+font-weight: bold; /* Make the first and last time labels bold */
+white-space: nowrap; /* Prevent line break */
+}
+
+.time-label:first-child {
+margin-left: -5px; /* Adjust spacing for the first time label */
+}
+
+.time-label:last-child {
+margin-right: -5px; /* Adjust spacing for the last time label */
+}
+

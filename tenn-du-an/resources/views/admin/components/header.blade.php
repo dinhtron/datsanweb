@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-</head>
-<body>
-    <header>
+<header>
         <h1>Admin Dashboard</h1>
     </header>
 
@@ -19,15 +11,7 @@
             <li><a href="/admin/sanbong">Sân Bóng</a></li>
             <li><a href="/admin/feedback">Phản hồi</a></li>
             <li><a href="/slides">Quảng Bá</a></li>
+            <a href="{{ route('admin/logout') }}">Đăng Xuất</a>
+
         </ul>
     </nav>
-
-    <section id="main-content">
-        <!-- Main content goes here -->
-    </section>
-
-    <footer>
-        <p>&copy; 2023 Admin Dashboard</p>
-    </footer>
-</body>
-</html>

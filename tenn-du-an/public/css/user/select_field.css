@@ -1,0 +1,216 @@
+
+.profile-dropdown {
+    margin-left: auto; /* Đẩy sang bên phải */
+    margin-right: 150px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.dropdown-content a {
+    display: block;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #333;
+    padding: 10px;
+}
+
+.profile-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-item:hover {
+    background-color: #ddd;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.price-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.price-table th,
+.price-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.price-table th {
+    background-color: #333;
+    color: white;
+}
+
+.price-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.intro-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+    text-align: center;
+}
+/* Add some styling to the form container */
+/* Style the form container */
+#fieldForm {
+width: 100%; /* Adjust the width as needed */
+margin: 20px auto; /* Center the form on the page */
+margin-left: 20px;
+margin-right: 20px;
+}
+
+/* Style the label */
+label {
+display: block; /* Make the label a block element to place it on a new line */
+margin-bottom: 5px; /* Add some space below the label */
+}
+
+/* Style the field options container */
+.field-options {
+display: flex; 
+}
+
+/* Style each field option */
+.field-option {
+cursor: pointer; /* Add a pointer cursor on hover to indicate it's clickable */
+padding: 70px; /* Add padding for better visual appeal */
+margin-left: 20px; /* Add space between field options */
+border: 1px solid #ddd; /* Add a subtle border for separation */
+border-radius: 4px; /* Add some border-radius for rounded corners */
+background-color: #FAFAD2;
+}
+
+.field-option:hover {
+background-color: #f5f5f5; /* Light background color on hover */
+}
+
+/* Hide the default dropdown arrow */
+select {
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+text-indent: 1px;
+text-overflow: '';
+}
+
+/* Style the hidden input */
+#selectedField {
+display: none; /* Hide the hidden input */
+}
+h2 {
+text-align: center; /* Center the text horizontally */
+margin-top: 0; /* Remove default margin from the top */
+}
+/* Thiết lập kiểu cho form */
+.custom-form {
+max-width: 400px;
+margin: 20px auto;
+padding: 20px;
+border: 1px solid #ccc;
+border-radius: 5px;
+background-color: #f9f9f9;
+}
+
+/* Thiết lập kiểu cho nhãn và input */
+.form-label {
+display: block;
+margin-bottom: 10px;
+font-weight: bold;
+}
+
+.form-input {
+width: 100%;
+padding: 8px;
+margin-bottom: 15px;
+box-sizing: border-box;
+}
+
+/* Thiết lập kiểu cho nút */
+.form-button {
+background-color: #4CAF50;
+color: white;
+padding: 10px 15px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.form-button:hover {
+background-color: #45a049;
+}
+
+/* Thiết lập kiểu cho thông báo */
+.form-message {
+margin: 10px 0;
+padding: 10px;
+background-color: #dff0d8;
+border: 1px solid #d6e9c6;
+border-radius: 5px;
+color: #3c763d;
+}
+/* Thiết lập kiểu cho form */
+#fieldForm {
+max-width: 600px; /* Tùy chỉnh theo ý muốn của bạn */
+margin: 20px auto;
+padding: 20px;
+border: 1px solid #ccc;
+border-radius: 5px;
+}
+
+/* Thiết lập kiểu cho các field-option */
+.field-options {
+display: flex;
+flex-wrap: wrap;
+}
+
+.field-option {
+width: 22%; /* Mỗi ô chiếm 25% chiều rộng của container (4 ô trên 1 dòng) */
+box-sizing: border-box;
+padding: 10px;
+margin: 5px;
+border: 1px solid #ccc;
+border-radius: 5px;
+cursor: pointer;
+}
+
+
+
+/* Thiết lập kiểu cho selectedField */
+#selectedField {
+display: none; /* Ẩn input hidden */
+}

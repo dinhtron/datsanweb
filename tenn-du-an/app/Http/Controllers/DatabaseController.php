@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\DB;
 class DatabaseController extends Controller
 {
     public function getStatistics()
-    {
+    {   $userId = session('admin_id');
+        if (!$userId) {
+            abort(404, 'Không tìm thấy');
+        }
         // Lấy số lượng người dùng
         $totalUsers = DB::table('users')->count();
 

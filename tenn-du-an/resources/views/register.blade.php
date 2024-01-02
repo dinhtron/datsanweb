@@ -4,136 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>User Dashboard</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        nav {
-            background: linear-gradient(to bottom, #FAFAD2, white);
-            padding: 10px;
-            text-align: center;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-
-        nav a {
-            color: #00AA00;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        nav img {
-            margin-left: 150px;
-            width: 50px;
-            height: 50px;
-        }
-
-        .nav-container {
-            
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%; /* Đảm bảo thanh điều hướng chiếm toàn bộ chiều rộng */
-        }
-
-        nav a.logout {
-            margin-right: 10px;
-            margin-left: 10; /* Khoảng cách giữa Đăng Xuất và Profile Dropdown */
-        }
-
-        .profile-dropdown {
-            margin-left: auto; /* Đẩy sang bên phải */
-            margin-right: 150px;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            border-radius: 5px;
-        }
-
-        .dropdown-content a {
-            display: block;
-            margin-bottom: 10px;
-            text-decoration: none;
-            color: #333;
-            padding: 10px;
-        }
-
-        .profile-dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown-item:hover {
-            background-color: #ddd;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .pricing-container {
-            max-width: 600px;
-            margin: 20px auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .price-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .price-table th,
-        .price-table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .price-table th {
-            background-color: #333;
-            color: white;
-        }
-
-        .price-table tr:hover {
-            background-color: #f5f5f5;
-        }
-
-        .intro-container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .contact-info {
-            margin-top: 20px;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
-            text-align: center;
-        }
         body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -241,7 +115,7 @@ a:hover {
 </nav>
     <form method="post" action="{{ url('/register') }}">
         @csrf
-        <h2>Đăng nhập admin</h2>
+        <h2>Đăng Kí</h2>
         @csrf
         <label for="tai_khoan">Tài khoản:</label>
         <input type="text" name="tai_khoan" required>

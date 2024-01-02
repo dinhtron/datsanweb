@@ -22,7 +22,10 @@ class UserController extends Controller
             }
             // Trong controller của bạn
                 public function showUsers()
-                {
+                {    $userId = session('admin_id');
+                    if (!$userId) {
+                        abort(404, 'Không tìm thấy');
+                    }
                     $users = DB::table('users')->get();
                      return view('admin.users', ['users' => $users]);
                     

@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\DB;
 class SlideController extends Controller
 {
     public function index()
-    {
+    {    $userId = session('admin_id');
+        if (!$userId) {
+            abort(404, 'Không tìm thấy');
+        }
         $slides = DB::table('slide')->get();
         return view('slides.index', compact('slides'));
     }

@@ -1,11 +1,4 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/admin_home.css') }}">
-    <style>
                 #main-content {
             max-width: 800px;
             margin: 50px auto;
@@ -13,7 +6,6 @@
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
-            display: flex;
             flex-direction: row; /* Hiển thị các ô nằm ngang */
             justify-content: space-between; /* Canh chỉnh khoảng cách giữa các ô */
         }
@@ -42,30 +34,42 @@
             background-color: #ea6d6d;
             color: #fff;
         }
-                    </style>
-    <title>Admin Dashboard</title>
-</head>
-<body>
-    @include('admin.components.header')
-    <section id="main-content">
-    <div class="stat-box">
-        <p>Người dùng</p>
-        <p> {{ $totalUsers }}</p>
-    </div>
+                
+    h2 {
+        color: #333;
+    }
 
-    <div class="stat-box">
-        <p>Doanh Thu</p>
-        <p> {{ number_format($totalPrice, 0, ',', '.') }} Đồng</p>
-    </div>
 
-    <div class="stat-box">
-        <p>Số Sân</p>
-        <p> {{ $totalSanbong }}</p>
-    </div>
-</section>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
 
-    <footer>
-        <p>&copy; 2023 Admin Dashboard</p>
-    </footer>
-</body>
-</html>
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    img {
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    button {
+        background-color: #ff3333;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #cc0000;
+    }

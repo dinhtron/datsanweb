@@ -9,7 +9,10 @@ use DB;
 class ProductController extends Controller
 {
     public function index()
-    {
+    {    $userId = session('admin_id');
+        if (!$userId) {
+            abort(404, 'Không tìm thấy');
+        }
         $products = DB::table('sanpham')->get();
          return view('products.all-in-one', compact('products'));
   
