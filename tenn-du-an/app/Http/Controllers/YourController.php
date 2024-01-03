@@ -2,7 +2,7 @@
 // app/Http/Controllers/YourController.ph
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Session;
-
+use Carbon\Carbon;
 // ...
 
 use Illuminate\Support\Facades\Hash;
@@ -35,7 +35,8 @@ class YourController extends Controller
         $mat_khau = $request->input('mat_khau');
         $email = $request->input('email');
         $so_dt = $request->input('so_dt');
-    
+        $dia_chi = $request->input('dia_chi');
+        $thoi_gian = Carbon::now();
         // Kiểm tra xem email hoặc số điện thoại đã tồn tại chưa
         $existingUser = DB::table('users')
             ->where('email', $email)
@@ -56,6 +57,8 @@ class YourController extends Controller
             'password' => $hashedPassword,
             'email' => $email,
             'so_dt' => $so_dt,
+            'registration_time'=> $thoi_gian,
+            'address'=>$dia_chi,
         ]);
     
         return Redirect::to('/login')->with('success', 'Đăng ký thành công!');

@@ -1,5 +1,6 @@
 <?php
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\UserController;
@@ -117,4 +118,8 @@ Route::post('/luu-ngay', function (\Illuminate\Http\Request $request) {
 
     return redirect('/select-field')->with('thongbao', $thongBao);
 });
-
+Route::delete('/delete-booking/{id}', function ($id) {
+    // Sử dụng DB::delete để xóa bản ghi từ cơ sở dữ liệu
+    DB::delete('DELETE FROM bookings WHERE id = ?', [$id]);
+    return redirect('/admin/donhang');
+})->name('booking.delete');

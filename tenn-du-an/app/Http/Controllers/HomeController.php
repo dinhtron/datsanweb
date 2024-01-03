@@ -10,7 +10,8 @@ class HomeController extends Controller
 {
     public function showHome()
     {   $slides = DB::table('slide')->get();
+        $sanbong = DB::table('sanbong')->get();
         $id = Session::get('id');
-        return view('home', compact('id','slides'));
+        return view('home', compact('id','slides','sanbong'));
     }
 }

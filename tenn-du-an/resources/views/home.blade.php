@@ -28,7 +28,6 @@
 
         <div class="pricing-container">
             <h2>Soccer Field Price List</h2>
-            <h2>User ID: {{ $id }}</h2>
             <table class="price-table">
                 <thead>
                     <tr>
@@ -37,19 +36,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                @foreach($sanbong->take(3) as $s)
                     <tr>
-                        <td>Grass Field</td>
-                        <td>$20</td>
+                        <td>{{ $s->ten_sanbong }}</td>
+                        <td>{{ number_format($s->giasan, 0, ',', '.') }} VNĐ</td>
                     </tr>
-                    <tr>
-                        <td>Artificial Turf</td>
-                        <td>$25</td>
-                    </tr>
-                    <tr>
-                        <td>Indoor Field</td>
-                        <td>$30</td>
-                    </tr>
-                    <!-- Add more rows for additional field types -->
+                @endforeach
+
                 </tbody>
             </table>
         </div>

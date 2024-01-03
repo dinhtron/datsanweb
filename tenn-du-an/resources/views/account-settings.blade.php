@@ -35,6 +35,10 @@
                 <input type="tel" id="so_dt" name="so_dt" value="{{ old('so_dt', $current_so_dt) }}" required>
             </div>
             <div class="form-group">
+                <label for="dia_chi">Địa Chỉ:</label>
+                <input type="text" id="dia_chi" name="dia_chi" value="{{ old('dia_chi', $current_dia_chi) }}" required>
+            </div>
+            <div class="form-group">
                 <label for="new-password">New Password:</label>
                 <input type="password" id="new-password" name="new-password" required>
             </div>

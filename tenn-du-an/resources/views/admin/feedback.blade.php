@@ -6,6 +6,31 @@
     <link rel="stylesheet" href="{{ asset('css/admin_home.css') }}">
     <title>Admin Dashboard</title>
 </head>
+<style>
+    h2 {
+        color: #333; /* Màu chữ đen */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px; /* Khoảng cách từ tiêu đề đến bảng */
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2; /* Màu nền của header */
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9; /* Màu nền của các hàng chẵn */
+    }
+</style>
 <body>
     @include('admin.components.header')
     <section id="main-content">
@@ -40,9 +65,5 @@
     @endif
 
     </section>
-
-    <footer>
-        <p>&copy; 2023 Admin Dashboard</p>
-    </footer>
 </body>
 </html>

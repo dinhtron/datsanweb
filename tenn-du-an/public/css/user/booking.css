@@ -72,6 +72,8 @@ form {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+    width: 30%; /* Chiếm 50% chiều rộng của màn hình */
+    margin: 0 auto; /* Để canh giữa form trong trang */
 }
 
 label {
@@ -138,13 +140,14 @@ text-align: center;
 }
 
 .booking-dates-container {
-
+width: 80%;
 flex-wrap: wrap;
 justify-content: space-around;
+margin: 0 auto; 
 }
 
 .booking-date {
-background-color: #3498db;
+background-color: #0a011172;
 color: #fff;
 cursor: pointer;
 margin: 5px;
@@ -166,7 +169,7 @@ display: none;
 }
 
 .time-bar {
-background-color: #3498db;
+background-color: #55db34;
 height: 10px;
 margin-top: 10px;
 }

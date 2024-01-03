@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/user/booking.css') }}">
@@ -11,7 +14,41 @@
     <title>Đặt Sân</title>
 
 </head>
+<style>
 
+.confirmation-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff; 
+    padding: 200px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.confirmation-dialog p {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.confirmation-dialog button {
+    padding: 15px;
+    margin: 0 10px;
+    cursor: pointer;
+    background-color: #4CAF50; /* Màu nền nút */
+
+    border: none;
+    border-radius: 5px;
+}
+
+.confirmation-dialog button:hover {
+    background-color: #e0e0e0; /* Màu nền nút khi hover */
+}
+
+
+</style>
 <body>
 <?php
     if (isset($taikhoan)) {
@@ -23,12 +60,12 @@
 ?>
 <!-- header.php -->
 @include('components.header1')
-
-<form method="post" action="">
+<form method="post" id="yourFormId" action="" onsubmit="return showConfirmation()" autocomplete="off">
+    @csrf
     @if(session('bookingAdded'))
-            <div class="alert_success">
-                Đơn đặt sân đã được thêm thành công!
-            </div>
+        <div class="alert_success" id="bookingSuccess">
+            Đơn đặt sân đã được thêm thành công!
+        </div>
     @endif
     @if(session('bookingAdded1'))
             <div class="alert_success">
@@ -45,9 +82,9 @@
                Thời gian sân đóng cửa!
             </div>
     @endif
-    @csrf <!-- Thêm CSRF token để bảo vệ form -->
+     <!-- Thêm CSRF token để bảo vệ form -->
  
-    <label for="checkin_date"><strong>Giá Sân:{{ $giasan }} Đồng/Giờ</strong></label>
+    <label for="checkin_date"><strong>Giá Sân: {{ number_format($giasan, 0, ',', '.') }} Đồng/Giờ</strong></label>
     <label for="checkin_date">Ngày Đặt Sân:</label>
     <input type="date" name="checkin_date" required min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ session('ngayDuocChon') ? session('ngayDuocChon')->toDateString() : '' }}" readonly><br>
     <label for="checkin_time">Giờ Check-in:</label>
@@ -57,7 +94,40 @@
     <input type="submit" value="Thêm">
     <div id="calculatedPrice"></div>
 </form>
+<script>
+    window.onload = function () {
+        document.getElementById("yourFormId").reset(); // Đặt ID của biểu mẫu của bạn
+    };
+</script>
 
+<script>
+    function showConfirmation() {
+        // Tạo một div để tùy chỉnh giao diện hộp thoại xác nhận
+        var confirmationDialog = document.createElement('div');
+        confirmationDialog.className = 'confirmation-dialog';
+        confirmationDialog.innerHTML = `
+            <p>Xác nhận đặt sân?</p>
+            <button onclick="confirmAction()">Đồng ý</button>
+            <button onclick="cancelAction()">Hủy</button>
+        `;
+
+        // Thêm div vào body
+        document.body.appendChild(confirmationDialog);
+
+        // Ngăn chặn việc submit form
+        return false;
+    }
+
+    function confirmAction() {
+        // Xử lý khi người dùng đồng ý
+        document.querySelector('form').submit();
+    }
+
+    function cancelAction() {
+        // Xử lý khi người dùng hủy
+        document.querySelector('.confirmation-dialog').remove();
+    }
+</script>
 <script>
    function calculatePrice() {
             // Lấy giờ check-in và check-out
@@ -70,8 +140,9 @@
             // Hiển thị giá tính toán trên màn hình
             var calculatedPriceDiv = document.getElementById("calculatedPrice");
             if(price.toFixed(2)>0){
-                calculatedPriceDiv.innerHTML = "Giá Tính Toán: $" + price.toFixed(2);
+                calculatedPriceDiv.innerHTML = "Giá Tiền: " + price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
             }
+                
             else{
                 calculatedPriceDiv.innerHTML= "Xin vui lòng đặt lại vì đã bao gồm giờ nghĩ của sân hoặc giờ checin trước giờ check out"
             }
@@ -169,7 +240,7 @@
         var width = ((checkoutTime - checkinTime) / (24 * 60 * 60 * 1000)) * 100;
         var left = ((checkinTime - new Date("2023-01-01T00:00:00")) / (24 * 60 * 60 * 1000)) * 100;
 
-        timelineElement.style.background = '#3498db';
+        timelineElement.style.background = '#b8e994';
         timelineElement.style.width = width + '%';
         timelineElement.style.left = left + '%';
 

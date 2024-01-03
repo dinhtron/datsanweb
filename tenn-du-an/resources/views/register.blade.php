@@ -127,6 +127,8 @@ a:hover {
         <input type="email" name="email" required>
         <label for="so_dt">Số điện thoại:</label>
         <input type="tel" name="so_dt" pattern="[0-9]{10}" required>
+        <label for="dia_chi">Địa Chỉ</label>
+        <input type="text" name="dia_chi"  required>
 
         <input type="submit" value="Đăng Ký">
         <a href="{{ url('/login') }}">Đăng nhập</a>

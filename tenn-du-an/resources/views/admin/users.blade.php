@@ -59,7 +59,6 @@
                     <th>ID</th>
                     <th>Tên tài khoản</th>
                     <th>Email</th>
-                    <th>Password</th>
                     <th>Trạng Thái</th>
                     <th>Xóa</th>
                 </tr>
@@ -70,7 +69,6 @@
                         <td>{{ $user->id_user }}</td>
                         <td>{{ $user->taikhoan }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>{{ $user->password }}</td>
                         <td>
                             <button onclick="changeStatus({{ $user->id_user }}, '{{ $user->trangthai }}')">
                                 {{ $user->trangthai }}

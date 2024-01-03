@@ -51,37 +51,72 @@
 
     <section id="main-content">
     @section('content')
-    <h2>Đơn hàng</h2>
 
     @if (!empty($bookings))
-        <table border="1">
-            <thead>
+    <h2>Đơn Đặt Sân Mới</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Mã đơn</th>
+                <th>Tài khoản</th>
+                <th>Email</th>
+                <th>Ngày đặt sân</th>
+                <th>Giờ Check-in</th>
+                <th>Giờ Check-out</th>
+                <th>Giá</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach ($bookings->where('checkin_date', '>=', \Carbon\Carbon::now()->toDateString()) as $booking)
+            <tr>
+                <td>{{ $booking->id }}</td>
+                <td>{{ $booking->taikhoan }}</td>
+                <td>{{ $booking->email }}</td>
+                <td>{{ $booking->checkin_date }}</td>
+                <td>{{ $booking->checkin_time }}</td>
+                <td>{{ $booking->checkout_time }}</td>
+                <td>{{ number_format($booking->price, 0, ',', '.') }} VNĐ</td>
+                <td>
+                    <form action="{{ route('booking.delete', $booking->id) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Hủy Đơn</button>
+                    </form>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+
+    <h2>Đơn đặt sân cũ</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Mã đơn</th>
+                <th>Tài khoản</th>
+                <th>Email</th>
+                <th>Ngày đặt sân</th>
+                <th>Giờ Check-in</th>
+                <th>Giờ Check-out</th>
+                <th>Giá</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($bookings->where('checkin_date', '<', \Carbon\Carbon::now()->toDateString()) as $booking)
                 <tr>
-                    <th>Mã đơn</th>
-                    <th>Tài khoản</th>
-                    <th>Email</th>
-                    <th>Ngày đặt sân</th>
-                    <th>Giờ Check-in</th>
-                    <th>Giờ Check-out</th>
-                    <th>Giá</th>
-                    <th>ID người đặt</th>
+                    <td>{{ $booking->id }}</td>
+                    <td>{{ $booking->taikhoan }}</td>
+                    <td>{{ $booking->email }}</td>
+                    <td>{{ $booking->checkin_date }}</td>
+                    <td>{{ $booking->checkin_time }}</td>
+                    <td>{{ $booking->checkout_time }}</td>
+                    <td>{{ number_format($booking->price, 0, ',', '.') }} VNĐ</td>
+                    
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($bookings as $booking)
-                    <tr>
-                        <td>{{ $booking->id }}</td>
-                        <td>{{ $booking->taikhoan }}</td>
-                        <td>{{ $booking->email }}</td>
-                        <td>{{ $booking->checkin_date }}</td>
-                        <td>{{ $booking->checkin_time }}</td>
-                        <td>{{ $booking->checkout_time }}</td>
-                        <td>{{ $booking->price }}</td>
-                        <td>{{ $booking->id_user }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            @endforeach
+        </tbody>
+    </table>
     @else
         <p>Hiện chưa có sân nào được đặt.</p>
     @endif
