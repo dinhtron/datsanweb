@@ -26,7 +26,16 @@ class SlideController extends Controller
         $thoigianupanh = now();
     
         if ($request->hasFile('img') && $request->file('img')->isValid()) {
-            $imgPath = $request->file('img')->store('slides', 'public');
+            $file = $request->file('img');
+            $fileName = $file->getClientOriginalName(); // Lấy tên file gốc
+
+            // Di chuyển file vào thư mục public
+            $file->move(public_path('storage/slide'), $fileName);
+
+            // Đường dẫn sau khi di chuyển
+            $imgPath = 'storage/slide/' . $fileName;
+
+
         } else {
             $imgPath = null;
         }

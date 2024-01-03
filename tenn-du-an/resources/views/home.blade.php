@@ -16,7 +16,7 @@
     <div class="container">
     <div class="slider">
     @foreach ($slides as $slide)
-             <img src="{{ asset('storage/' . $slide->img) }}" alt="{{ $slide->name }}" >
+             <img src="{{ asset('/' . $slide->img) }}" alt="{{ $slide->name }}" >
      @endforeach
     </div>
     </div>

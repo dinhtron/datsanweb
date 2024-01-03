@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,13 +17,14 @@ class AccountSettingsController extends Controller
             $password = $request->input('new-password'); // Hash the password
             $so_dt = $request->input('so_dt');
             $dia_chi = $request->input('dia_chi');
+            $hashedPassword = Hash::make($password);
             // Truy vấn SQL UPDATE
             DB::table('users')
                 ->where('id_user', $id)
                 ->update([
                     'taikhoan' => $taikhoan,
                     'email' => $email,
-                    'password' => $password,
+                    'password' => $hashedPassword,
                     'so_dt' => $so_dt,
                     'address' => $dia_chi,
                 ]);

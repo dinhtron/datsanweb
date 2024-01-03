@@ -26,7 +26,7 @@
             <td>{{ $slide->id }}</td>
             <td>{{ $slide->name }}</td>
             <td>
-            <img src="{{ asset('storage/' . $slide->img) }}" alt="Hình ảnh của {{ $slide->name }}" style="max-width: 100px; max-height: 100px;">
+            <img src="{{ asset('/' . $slide->img) }}" alt="Hình ảnh của {{ $slide->name }}" style="max-width: 100px; max-height: 100px;">
 
             <td>{{ $slide->thoigianupanh }}</td>
             <td>
